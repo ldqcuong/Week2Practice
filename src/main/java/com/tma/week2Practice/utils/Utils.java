@@ -10,10 +10,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.tma.week2Practice.dto.ListStudent;
+import com.tma.week2Practice.dto.ListStudentDTO;
+import com.tma.week2Practice.dto.ScoreDTO;
+import com.tma.week2Practice.dto.StudentDTO;
 
 public class Utils {
-	private static Logger LOGGER = LogManager.getLogger(ListStudent.class);
+	private static Logger LOGGER = LogManager.getLogger(ListStudentDTO.class);
 
 	public static class JDBCUtils {
 		private static String jdbcURL = "jdbc:mysql://localhost:3306/demo";
@@ -65,6 +67,25 @@ public class Utils {
 		public static String getJSON(Object object) {
 			String jsonString = new Gson().toJson(object);
 			return jsonString;
+		}
+	}
+
+	public static class ListStudentUtils {
+		public static ListStudentDTO getSampleStudent() {
+			ScoreDTO math = new ScoreDTO("math", 5.0);
+			ScoreDTO english = new ScoreDTO("english", 9.0);
+			ScoreDTO physical = new ScoreDTO("physical", 9.0);
+			StudentDTO student1 = new StudentDTO("Hai1", 18, "12C1", "Gia Lai");
+			student1.addScore(math);
+			student1.addScore(english);
+			StudentDTO student2 = new StudentDTO("Hai2", 18, "12C1", "Gia Lai");
+			student2.addScore(math);
+			student2.addScore(english);
+			student2.addScore(physical);
+			ListStudentDTO listStudent = new ListStudentDTO();
+			listStudent.getStudents().add(student1);
+			listStudent.getStudents().add(student2);
+			return listStudent;
 		}
 	}
 }
