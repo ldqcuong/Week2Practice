@@ -47,6 +47,10 @@ public class ListStudent {
 
 	}
 
+	public void removeStudentByName(String name) {
+		students.removeIf(obj -> obj.getName().equals(name));
+	}
+
 	// find student who has max GPA
 	public Student getSmartestStudent() {
 		this.smartestStudent = this.students.get(0);

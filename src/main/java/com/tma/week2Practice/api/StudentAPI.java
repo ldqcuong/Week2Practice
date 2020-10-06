@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +32,11 @@ public class StudentAPI {
 		return "<h1>Welcome</h1>";
 	}
 
+	@GetMapping("/students")
+	public ListStudent getStudent() {
+		return listStudent;
+	}
+
 	@PostMapping("/students")
 	public String createStudent(@RequestBody Student student) {
 		String message = StudentBO.checkStudent(student);
@@ -39,9 +46,21 @@ public class StudentAPI {
 		return "<h1>" + message + "<h1>";
 	}
 
-	@GetMapping("/students")
-	public ListStudent getStudent() {
-		return listStudent;
+	@PutMapping("/students")
+	public String updateStudent(@RequestBody Student student) {
+		String message = StudentBO.checkStudent(student);
+		if (message == "valid") {
+			listStudent.removeStudentByName(student.getName());
+			listStudent.addStudent(student);
+		}
+		return message;
+
+	}
+
+	@DeleteMapping("/students")
+	public void removeStudent(@RequestParam(value = "name") String name) {
+
+		listStudent.removeStudentByName(name);
 	}
 
 	@GetMapping("/smartestStudents")
