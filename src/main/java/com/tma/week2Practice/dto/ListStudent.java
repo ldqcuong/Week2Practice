@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ListStudent {
-	private ArrayList<Student> students;
+	public ArrayList<Student> students;
 	private Student stupidStudent;
 	private Student smartestStudent;
 
@@ -19,6 +22,7 @@ public class ListStudent {
 		LOGGER.info("New list student was created");
 	}
 
+	@Autowired
 	public void addStudent(Student student) {
 		this.students.add(student);
 		this.smartestStudent = this.getSmartestStudent();
@@ -31,6 +35,16 @@ public class ListStudent {
 		this.smartestStudent = this.getSmartestStudent();
 		this.stupidStudent = this.getStupidStudent();
 		LOGGER.info("New list student was created");
+	}
+
+	public Student findStudentByName(String name) {
+		for (Student student : students) {
+			if (student.getName().equals(name)) {
+				return student;
+			}
+		}
+		return null;
+
 	}
 
 	// find student who has max GPA

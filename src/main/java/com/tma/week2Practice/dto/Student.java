@@ -2,22 +2,28 @@ package com.tma.week2Practice.dto;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("Student")
 public class Student {
-	private String name;
-	private int age;
+	private String name = "";
+	private int age = 0;
+	private String province = "";
 	private String classes;
-	private String province;
-	private ArrayList<Score> scores;
-	@SuppressWarnings("unused")
 	private double GPA;
 
+	public ArrayList<IScore> scores = new ArrayList<IScore>();
+
 	public Student() {
-		this.name = "";
-		this.age = 0;
 		this.classes = "";
-		this.province = "";
-		this.scores = new ArrayList<Score>();
+
 		this.GPA = 0.0;
+	}
+
+	@Autowired
+	public void addScore(IScore score) {
+		this.scores.add(score);
 	}
 
 	public Student(String name, int age, String classes, String province) {
@@ -25,15 +31,6 @@ public class Student {
 		this.age = age;
 		this.classes = classes;
 		this.province = province;
-		this.GPA = this.getGPA();
-	}
-
-	public Student(String name, int age, String classes, String province, ArrayList<Score> scores) {
-		this.name = name;
-		this.age = age;
-		this.classes = classes;
-		this.province = province;
-		this.scores = scores;
 		this.GPA = this.getGPA();
 	}
 
@@ -47,7 +44,7 @@ public class Student {
 
 	public double getGPA() {
 		double gpa = 0;
-		for (Score score : this.scores) {
+		for (IScore score : this.scores) {
 			gpa += score.getPoint();
 		}
 		return gpa / this.scores.size();
@@ -57,11 +54,11 @@ public class Student {
 		this.GPA = GPA;
 	}
 
-	public ArrayList<Score> getScores() {
+	public ArrayList<IScore> getScores() {
 		return scores;
 	}
 
-	public void setScores(ArrayList<Score> scores) {
+	public void setScores(ArrayList<IScore> scores) {
 		this.scores = scores;
 	}
 

@@ -1,9 +1,11 @@
 com\tma\week2Practice\dto\Student.class
 com\tma\week2Practice\utils\Utils$JDBCUtils.class
+com\tma\week2Practice\api\App.class
 com\tma\week2Practice\dto\Score.class
 com\tma\week2Practice\dto\ListStudent.class
 com\tma\week2Practice\utils\Utils$JSONUtils.class
 com\tma\week2Practice\utils\Utils.class
 com\tma\week2Practice\api\StudentAPI.class
-com\tma\week2Practice\api\Application.class
+com\tma\week2Practice\dto\IStudent.class
 com\tma\week2Practice\bo\StudentBO.class
+com\tma\week2Practice\dto\IScore.class

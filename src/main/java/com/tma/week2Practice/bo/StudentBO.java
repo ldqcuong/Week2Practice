@@ -1,10 +1,9 @@
 package com.tma.week2Practice.bo;
 
-import java.util.ArrayList;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.tma.week2Practice.dto.IScore;
 import com.tma.week2Practice.dto.ListStudent;
 import com.tma.week2Practice.dto.Score;
 import com.tma.week2Practice.dto.Student;
@@ -16,12 +15,13 @@ public class StudentBO {
 		Score math = new Score("math", 5.0);
 		Score english = new Score("english", 9.0);
 		Score physical = new Score("physical", 9.0);
-		ArrayList<Score> scores = new ArrayList<Score>();
-		scores.add(math);
-		scores.add(english);
-		scores.add(physical);
-		Student student1 = new Student("Hai1", 18, "12C1", "Gia Lai", scores);
-		Student student2 = new Student("Hai2", 18, "12C1", "Gia Lai", scores);
+		Student student1 = new Student("Hai1", 18, "12C1", "Gia Lai");
+		student1.addScore(math);
+		student1.addScore(english);
+		Student student2 = new Student("Hai2", 18, "12C1", "Gia Lai");
+		student2.addScore(math);
+		student2.addScore(english);
+		student2.addScore(physical);
 		ListStudent listStudent = new ListStudent();
 		listStudent.addStudent(student1);
 		listStudent.addStudent(student2);
@@ -30,22 +30,23 @@ public class StudentBO {
 		return listStudent;
 	}
 
-	public static String checkStudent(String name, int age, String classes, String province, double mathScore,
-			double englishScore, double physicalScore) {
+	public static String checkStudent(Student student) {
 		String message = "valid";
-		if (name.length() > 30) {
+		if (student.getName().length() > 30) {
 			message = "Name was tool long!";
-		} else if (age < 0 || age > 100) {
+		} else if (student.getAge() < 0 || student.getAge() > 100) {
 			message = "Age is not valid";
-		} else if (classes.length() < 1 || classes.length() > 10) {
-			message = "Class 's name is not valid";
-		} else if (mathScore < 0 || mathScore > 10) {
-			message = "Math score is not valid";
-		} else if (englishScore < 0 || englishScore > 10) {
-			message = "English score is not valid";
-		} else if (physicalScore < 0 || physicalScore > 10) {
-			message = "Physical score is not valid";
+		} else if (student.getClasses().length() < 1 || student.getClasses().length() > 10) {
+			message = "Class's name is not valid";
 		}
+
+		for (IScore score : student.getScores()) {
+			if (score.getPoint() < 0 || score.getPoint() > 10) {
+				message = score.getName() + " score is not valid";
+				return message;
+			}
+		}
+
 		return message;
 	}
 }
